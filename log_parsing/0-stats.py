@@ -1,4 +1,3 @@
-cat > 0-stats.py <<'EOF'
 #!/usr/bin/python3
 """Parse HTTP logs and print cumulative statistics."""
 
@@ -57,4 +56,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-EOF
