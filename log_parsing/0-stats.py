@@ -1,12 +1,13 @@
+cat > 0-stats.py <<'EOF'
 #!/usr/bin/python3
-"""Read HTTP logs and print cumulative statistics."""
+"""Parse HTTP logs and print cumulative statistics."""
 
 import re
 import sys
 
 
 def print_stats(total_size, status_counts):
-    """Print total file size and status code counts."""
+    """Print total file size and HTTP status counts."""
     print("File size: {}".format(total_size))
 
     for status in sorted(status_counts):
@@ -14,7 +15,7 @@ def print_stats(total_size, status_counts):
 
 
 def main():
-    """Process input lines and update statistics."""
+    """Read log lines and calculate cumulative statistics."""
     total_size = 0
     status_counts = {}
     line_count = 0
@@ -50,9 +51,10 @@ def main():
         print_stats(total_size, status_counts)
         return
 
-    if line_count % 10 != 0:
+    if line_count == 0 or line_count % 10 != 0:
         print_stats(total_size, status_counts)
 
 
 if __name__ == "__main__":
     main()
+EOF
