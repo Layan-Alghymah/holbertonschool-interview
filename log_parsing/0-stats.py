@@ -48,6 +48,10 @@ def main():
 
     except KeyboardInterrupt:
         print_stats(total_size, status_counts)
+        return
+
+    if line_count % 10 != 0:
+        print_stats(total_size, status_counts)
 
 
 if __name__ == "__main__":
