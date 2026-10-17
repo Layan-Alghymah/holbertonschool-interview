@@ -6,7 +6,7 @@ import sys
 
 
 def print_stats(total_size, status_counts):
-    """Print total file size and HTTP status counts."""
+    """Print accumulated statistics."""
     print("File size: {}".format(total_size))
 
     for status in sorted(status_counts):
@@ -14,18 +14,17 @@ def print_stats(total_size, status_counts):
 
 
 def main():
-    """Read log lines and calculate cumulative statistics."""
+    """Read log lines and calculate statistics."""
     total_size = 0
     status_counts = {}
     line_count = 0
+    valid_codes = {200, 301, 400, 401, 403, 404, 405, 500}
 
     pattern = re.compile(
         r'^\S+ - \[[^\]]+\] '
         r'"GET /projects/260 HTTP/1\.1" '
-        r'(\d+) (\d+)$'
+        r'(\S+) (\d+)$'
     )
-
-    valid_codes = {200, 301, 400, 401, 403, 404, 405, 500}
 
     try:
         for line in sys.stdin:
@@ -33,15 +32,17 @@ def main():
             match = pattern.fullmatch(line.strip())
 
             if match:
-                status = int(match.group(1))
-                size = int(match.group(2))
+                status_text, size_text = match.groups()
+                total_size += int(size_text)
 
-                total_size += size
-
-                if status in valid_codes:
-                    status_counts[status] = (
-                        status_counts.get(status, 0) + 1
-                    )
+                try:
+                    status = int(status_text)
+                    if status in valid_codes:
+                        status_counts[status] = (
+                            status_counts.get(status, 0) + 1
+                        )
+                except ValueError:
+                    pass
 
             if line_count % 10 == 0:
                 print_stats(total_size, status_counts)
