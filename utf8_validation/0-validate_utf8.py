@@ -1,4 +1,4 @@
-# !/usr/bin/python3
+#!/usr/bin/python3
 """Validate UTF-8 encoded data."""
 
 
