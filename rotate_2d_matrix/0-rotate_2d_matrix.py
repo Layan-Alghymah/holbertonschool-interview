@@ -2,9 +2,8 @@
 #!/usr/bin/python3
 """Rotate a square 2D matrix 90 degrees clockwise."""
 
-
 def rotate_2d_matrix(matrix):
-    """Rotate the matrix in-place without returning a value."""
+    """ Rotate the matrix in-place without returning a value."""
     n = len(matrix)
 
     # Step 1: Transpose the matrix
