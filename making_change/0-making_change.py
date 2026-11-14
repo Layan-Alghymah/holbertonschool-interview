@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """Minimum number of coins needed to make change."""
 
